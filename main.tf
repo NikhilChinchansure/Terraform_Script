@@ -115,15 +115,14 @@ module "eks" {
 }
 
 # IAM Role for EKS Cluster
-# IAM Role for EKS Cluster
 resource "aws_iam_role" "eks_cluster_role" {
   name               = "${var.project_name}-eks-cluster-role"
   assume_role_policy = data.aws_iam_policy_document.eks_trust.json
 }
 
-# Using aws_iam_role_policy to attach an inline policy to the role
-resource "aws_iam_role_policy" "eks_cluster_inline_policy" {
-  name   = "eks-cluster-inline-policy"
+# Using aws_iam_role_policy to attach an policy to the role
+resource "aws_iam_role_policy" "eks_cluster_policy" {
+  name   = "eks-cluster-policy"
   role   = aws_iam_role.eks_cluster_role.id
   policy = data.aws_iam_policy_document.eks_policy.json
 }
@@ -152,4 +151,3 @@ data "aws_iam_policy_document" "alb_controller" {
     resources = ["*"]
   }
 }
-
